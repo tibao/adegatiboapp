@@ -28,6 +28,17 @@ class AdegaApp:
         self.frame_pagamento = tk.LabelFrame(self.frame_principal, text="Controle de Pagamentos", padx=10, pady=10, bg="#f4f4f4", font=("Arial", 12, "bold"))
         self.frame_pagamento.grid(row=0, column=2, padx=10, pady=10, sticky="nsew")
 
+        # Barra lateral com as letras do alfabeto
+        self.frame_alfabeto = tk.Frame(self.frame_principal, bg="#f4f4f4")
+        self.frame_alfabeto.grid(row=0, column=3, padx=10, pady=10, sticky="ns")
+
+        self.buttons_alfabeto = {}
+        self.alfabeto = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+        for i, letra in enumerate(self.alfabeto):
+            btn = tk.Button(self.frame_alfabeto, text=letra, width=5, command=lambda letra=letra: self.filtrar_por_letra(letra))
+            btn.grid(row=i, column=0, pady=2, padx=2)
+            self.buttons_alfabeto[letra] = btn
+
         # Cadastro de clientes
         tk.Label(self.frame_cadastro, text="Nome do Cliente:", bg="#f4f4f4").grid(row=0, column=0, pady=5)
         self.entry_cliente = tk.Entry(self.frame_cadastro, width=25)
@@ -132,7 +143,7 @@ class AdegaApp:
                     self.lista_produtos_devidos.insert(tk.END, fiado["produto"])
 
     def exibir_produtos_devidos_pagamento(self, event):
-        """Exibe os produtos devidos para o cliente selecionado na lista de pagamentos."""
+        """Exibe os produtos devidos para o cliente selecionado na lista de Pagamentos."""
         selecionado = self.treeview_pagamento.selection()
         if selecionado:
             cliente = self.treeview_pagamento.item(selecionado)["values"][0]
@@ -164,6 +175,15 @@ class AdegaApp:
             messagebox.showinfo("Devedores", f"Clientes com dívidas pendentes:\n{devedores_str}")
         else:
             messagebox.showinfo("Sem Devedores", "Nenhum cliente possui dívidas pendentes.")
+
+    def filtrar_por_letra(self, letra):
+        """Filtra os clientes para exibir apenas aqueles que começam com a letra selecionada."""
+        for item in self.treeview_clientes.get_children():
+            self.treeview_clientes.delete(item)
+
+        for cliente in sorted(self.clientes.keys()):
+            if cliente.upper().startswith(letra):
+                self.treeview_clientes.insert("", "end", values=(cliente,))
 
 
 if __name__ == "__main__":
