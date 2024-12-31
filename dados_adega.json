@@ -1,1 +1,1 @@
-{"Davi": [{"produto": "Crystal", "pago": true}], "gerson": [{"produto": "red label", "pago": false}], "junior": [{"produto": "heineken", "pago": false}]}
+{"Davi": [{"produto": "Crystal", "pago": true}], "gerson": [{"produto": "red label", "pago": true}], "junior": [{"produto": "heineken", "pago": true}, {"produto": "heineken caixa", "pago": true}], "Indiara": [{"produto": "feijao", "pago": true}]}
